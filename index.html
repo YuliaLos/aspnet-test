@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест з ASP.NET</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        h1 { text-align: center; }
+        .question { margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Тест з ASP.NET</h1>
+    <form id="quizForm">
+        <!-- Питання будуть вставлені тут за допомогою JS -->
+    </form>
+    <button onclick="submitQuiz()">Завершити тест</button>
+    <h2 id="result"></h2>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Що таке ASP.NET?",
+                options: [
+                    "Мова програмування",
+                    "Фреймворк для створення веб-додатків",
+                    "Операційна система",
+                    "Текстовий редактор"
+                ],
+                answer: 1
+            },
+            {
+                question: "2. Яка мова найчастіше використовується з ASP.NET?",
+                options: ["Java", "C#", "Python", "PHP"],
+                answer: 1
+            },
+            {
+                question: "3. Який компонент відповідає за маршрутизацію в ASP.NET MVC?",
+                options: ["Model", "View", "Controller", "RouteConfig"],
+                answer: 3
+            },
+            {
+                question: "4. Який файл використовується для налаштувань у ASP.NET?",
+                options: ["web.config", "config.xml", "app.json", "settings.txt"],
+                answer: 0
+            },
+            {
+                question: "5. Що таке Razor?",
+                options: [
+                    "База даних",
+                    "Технологія стилізації",
+                    "Мова розмітки у ASP.NET",
+                    "Сервер"
+                ],
+                answer: 2
+            },
+            {
+                question: "6. Який порт зазвичай використовує IIS?",
+                options: ["80", "21", "443", "8080"],
+                answer: 0
+            },
+            {
+                question: "7. Що таке View у MVC?",
+                options: [
+                    "Місце збереження логіки",
+                    "Форма для взаємодії з користувачем",
+                    "Клас контролера",
+                    "База даних"
+                ],
+                answer: 1
+            },
+            {
+                question: "8. Що таке Middleware у ASP.NET Core?",
+                options: [
+                    "Компонент бази даних",
+                    "Компонент для стилізації",
+                    "Компонент у конвеєрі обробки запитів",
+                    "Тип сторінки"
+                ],
+                answer: 2
+            },
+            {
+                question: "9. Який шаблон проекту містить Model, View, Controller?",
+                options: ["Web Forms", "MVC", "Blazor", "SPA"],
+                answer: 1
+            },
+            {
+                question: "10. Що таке Blazor?",
+                options: [
+                    "Фреймворк на Java",
+                    "Технологія для створення десктоп-додатків",
+                    "Технологія створення інтерфейсу користувача з C#",
+                    "Бібліотека CSS"
+                ],
+                answer: 2
+            }
+        ];
+
+        const form = document.getElementById("quizForm");
+
+        questions.forEach((q, i) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+
+            const qTitle = document.createElement("p");
+            qTitle.textContent = q.question;
+            div.appendChild(qTitle);
+
+            q.options.forEach((opt, j) => {
+                const label = document.createElement("label");
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "q" + i;
+                radio.value = j;
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(" " + opt));
+                div.appendChild(label);
+                div.appendChild(document.createElement("br"));
+            });
+
+            form.appendChild(div);
+        });
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((q, i) => {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && parseInt(selected.value) === q.answer) {
+                    score++;
+                }
+            });
+
+            document.getElementById("result").textContent = `Правильних відповідей: ${score} з ${questions.length}`;
+        }
+    </script>
+</body>
+</html>
